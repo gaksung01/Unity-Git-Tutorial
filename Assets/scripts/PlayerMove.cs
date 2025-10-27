@@ -18,13 +18,15 @@ public class PlayerMove : MonoBehaviour
 
     private bool isFacingRight = true;
     private bool isDead = false;
-    private float inpX, inpY;
+    public float inpX, inpY;
+    public Vector2 inputVec;
 
     void Awake()
     {
         rig = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+
     }
 
     
