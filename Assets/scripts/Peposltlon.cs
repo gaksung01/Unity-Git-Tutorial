@@ -2,45 +2,52 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Peposltlon : MonoBehaviour
+public class Reposition : MonoBehaviour
 {
-    
-    private void OnTriggerEnter2D(Collider2D collision)
+    Collider2D coll;
+
+    void Awake()
+    {
+        coll = GetComponent<Collider2D>();
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (!collision.CompareTag("Area"))
             return;
 
         Vector3 playerPos = GameManager.instance.player.transform.position;
         Vector3 myPos = transform.position;
-        float diffX = Mathf.Abs(playerPos.x - myPos.x);
-        float diffY = Mathf.Abs(playerPos.y - myPos.y);
 
-        Vector3 playerDir = GameManager.instance.player.inputVec;
-        float dirX =playerDir.x < 0 ? -1 : 1;
-        float difY =playerDir.y < 0 ? -1 : 1;
-
-        switch(transform.tag)
+        switch (transform.tag)
         {
             case "Ground":
-                if (diffX > diffY)
+                float diffx = playerPos.x - myPos.x;
+                float diffy = playerPos.y - myPos.y;
+                float dirX = diffx < 0 ? -1 : 1;
+                float dirY = diffy < 0 ? -1 : 1;
+
+                diffx = Mathf.Abs(diffx);
+                diffy = Mathf.Abs(diffy);
+
+                if (diffx > diffy)
                 {
                     transform.Translate(Vector3.right * dirX * 40);
                 }
-                else if (diffX < diffY)
+                else if (diffx < diffy)
                 {
-                    transform.Translate(Vector3.up * difY * 40);
-                }
-                else
-                {
-                    transform.Translate(Vector3.right * dirX * 40);
-                    transform.Translate(Vector3.up * difY * 40);
+                    transform.Translate(Vector3.up * dirY * 40);
                 }
                 break;
             case "Enemy":
-                break ;
+                if (coll.enabled)
+                {
+                    Vector3 dist = playerPos - myPos;
+                    Vector3 ran = new Vector3(Random.Range(-3, 3), 0);
+                    transform.Translate(ran + dist * 2);
+                }
+                break;
+
         }
-        
-
-
     }
 }
