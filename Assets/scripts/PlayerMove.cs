@@ -16,17 +16,23 @@ public class PlayerMove : MonoBehaviour
     private Animator anim;
     private SpriteRenderer spriteRenderer;
 
+    public float speed;
     private bool isFacingRight = true;
     private bool isDead = false;
     public float inpX, inpY;
     public Vector2 inputVec;
+    public Scanner scanner;
+    
+    public RuntimeAnimatorController[] animCon;
+    public Hand[] hands;
 
     void Awake()
     {
         rig = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-
+        scanner = GetComponent<Scanner>();
+        hands = GetComponentsInChildren<Hand>(true);
     }
 
     
@@ -42,16 +48,20 @@ public class PlayerMove : MonoBehaviour
         else if (inpX < 0 && isFacingRight)
             Flip();
 
-        Vector2 move = new Vector2(inpX, inpY);
-        anim.SetFloat("Speed", move.magnitude);
+       
+
+       
     }
 
     void FixedUpdate()
     {
+        
+
         if (isDead) return;
         Move();
         
     }
+   
     void Move()
     {
 
@@ -74,4 +84,6 @@ public class PlayerMove : MonoBehaviour
         rig.velocity = Vector2.zero; 
         this.enabled = false; 
     }
+   
+    
 }
