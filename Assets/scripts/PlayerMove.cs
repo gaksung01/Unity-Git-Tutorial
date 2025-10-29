@@ -1,11 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Windows;
-
-
-
 
 public class PlayerMove : MonoBehaviour
 {
@@ -22,7 +17,7 @@ public class PlayerMove : MonoBehaviour
     public float inpX, inpY;
     public Vector2 inputVec;
     public Scanner scanner;
-    
+
     public RuntimeAnimatorController[] animCon;
     public Hand[] hands;
 
@@ -35,39 +30,39 @@ public class PlayerMove : MonoBehaviour
         hands = GetComponentsInChildren<Hand>(true);
     }
 
-    
     void Update()
     {
         if (isDead) return;
 
-        inpX = UnityEngine.Input.GetAxisRaw("Horizontal");
-        inpY = UnityEngine.Input.GetAxisRaw("Vertical");
+        inpX = Input.GetAxisRaw("Horizontal");
+        inpY = Input.GetAxisRaw("Vertical");
 
+        // ✅ 이동 벡터 계산 (애니메이션에 사용)
+        inputVec = new Vector2(inpX, inpY);
+
+        // ✅ 방향 전환 (Flip)
         if (inpX > 0 && !isFacingRight)
             Flip();
         else if (inpX < 0 && isFacingRight)
             Flip();
 
-       
-
-       
+        // ✅ 🔥 애니메이션 Speed 파라미터 갱신
+        if (anim != null)
+            anim.SetFloat("Speed", inputVec.magnitude);
     }
 
     void FixedUpdate()
     {
-        
-
         if (isDead) return;
         Move();
-        
     }
-   
+
     void Move()
     {
-
         Vector3 move = new Vector3(inpX, inpY, 0f).normalized;
         transform.Translate(move * moveSpeed * Time.deltaTime);
     }
+
     void Flip()
     {
         isFacingRight = !isFacingRight;
@@ -75,15 +70,14 @@ public class PlayerMove : MonoBehaviour
         scale.x *= -1;
         transform.localScale = scale;
     }
+
     public void Die()
     {
         if (isDead) return;
 
         isDead = true;
-        anim.SetTrigger("Dead"); 
-        rig.velocity = Vector2.zero; 
-        this.enabled = false; 
+        anim.SetTrigger("Dead");
+        rig.velocity = Vector2.zero;
+        this.enabled = false;
     }
-   
-    
 }

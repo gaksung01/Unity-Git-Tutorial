@@ -254,8 +254,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: []
-  spawnData: []
-  levelTime: 1
+  spawnData:
+  - spriteType: 0
+    spawnTime: 0.7
+    health: 10
+    speed: 1.5
+  - spriteType: 1
+    spawnTime: 0.2
+    health: 15
+    speed: 2.4
+  levelTime: 0
 --- !u!1 &103640570
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,6 +310,7 @@ GameObject:
   - component: {fileID: 157738130}
   - component: {fileID: 157738129}
   - component: {fileID: 157738134}
+  - component: {fileID: 157738135}
   m_Layer: 0
   m_Name: Tilemap (1)
   m_TagString: Ground
@@ -4577,6 +4586,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea523f5a4662999409ee2d4a6b04aa3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coll: {fileID: 0}
+--- !u!114 &157738135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157738127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a8b9407794c584cbcb8f6ffd5a9f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &281121008
 GameObject:
   m_ObjectHideFlags: 0
@@ -4782,7 +4804,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 442637499}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4803,8 +4825,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d86d5360790d0544a9a2df2b689d6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  speed: 0
+  moveSpeed: 6
+  speed: 10
   inpX: 0
   inpY: 0
   inputVec: {x: 20, y: 20}
@@ -5182,6 +5204,7 @@ GameObject:
   - component: {fileID: 561056962}
   - component: {fileID: 561056961}
   - component: {fileID: 561056966}
+  - component: {fileID: 561056967}
   m_Layer: 0
   m_Name: Tilemap (3)
   m_TagString: Ground
@@ -9457,6 +9480,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea523f5a4662999409ee2d4a6b04aa3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coll: {fileID: 0}
+--- !u!114 &561056967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561056959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a8b9407794c584cbcb8f6ffd5a9f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &687648873
 GameObject:
   m_ObjectHideFlags: 0
@@ -9534,6 +9570,7 @@ GameObject:
   - component: {fileID: 787050473}
   - component: {fileID: 787050472}
   - component: {fileID: 787050477}
+  - component: {fileID: 787050478}
   m_Layer: 0
   m_Name: Tilemap
   m_TagString: Ground
@@ -13809,6 +13846,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea523f5a4662999409ee2d4a6b04aa3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coll: {fileID: 0}
+--- !u!114 &787050478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787050470}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a8b9407794c584cbcb8f6ffd5a9f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &974213836
 GameObject:
   m_ObjectHideFlags: 0
@@ -13855,6 +13905,7 @@ GameObject:
   - component: {fileID: 1016727736}
   - component: {fileID: 1016727735}
   - component: {fileID: 1016727740}
+  - component: {fileID: 1016727741}
   m_Layer: 0
   m_Name: Tilemap (2)
   m_TagString: Ground
@@ -18130,6 +18181,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea523f5a4662999409ee2d4a6b04aa3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coll: {fileID: 0}
+--- !u!114 &1016727741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016727733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3a8b9407794c584cbcb8f6ffd5a9f07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1096787397
 GameObject:
   m_ObjectHideFlags: 0
@@ -18331,7 +18395,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabs:
   - {fileID: 2222036516146628409, guid: 4e456c97cf3d0be4cba35e467e4140d0, type: 3}
-  - {fileID: 1935525705545642255, guid: 6bc14e1c94d0af746868f9a8ed0d62ac, type: 3}
 --- !u!1 &1378560690
 GameObject:
   m_ObjectHideFlags: 0
@@ -18929,7 +18992,7 @@ SceneRoots:
   - {fileID: 1953967434}
   - {fileID: 1378560692}
   - {fileID: 1340161252}
-  - {fileID: 519420032}
   - {fileID: 442637503}
+  - {fileID: 519420032}
   - {fileID: 548949093}
   - {fileID: 57265518}
