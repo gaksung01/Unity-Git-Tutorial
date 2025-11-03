@@ -1,96 +1,72 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("Enemy Stats")]
-    public float speed = 2f;
+    public float speed;
     public float health;
     public float maxHealth;
     public RuntimeAnimatorController[] animCon;
+    public Rigidbody2D target;
 
-    [Header("State")]
-    public bool isLive;
 
-    [Header("References")]
-    public Transform target; // Rigidbody2D → Transform 으로 변경
+    bool isLive;
 
     Rigidbody2D rigid;
     Collider2D coll;
     SpriteRenderer spriter;
     Animator anim;
+    //계속 new를 사용하면 최적화에 좋지 않아서 변수를 만들어줘야함
     WaitForFixedUpdate wait;
 
+    // Start is called before the first frame update
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        coll = GetComponent<Collider2D>();
         wait = new WaitForFixedUpdate();
+        coll = GetComponent<Collider2D>();
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (!GameManager.instance.isLive)
+            return;
+
+        if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+            return;
+
+
+        Vector2 dirVec = target.position - rigid.position;
+        Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
+        rigid.MovePosition(rigid.position + nextVec);
+        rigid.velocity = Vector2.zero;
+    }
+
+    void LateUpdate()
+    {
+        if (!GameManager.instance.isLive)
+            return;
+        spriter.flipX = target.position.x < rigid.position.x;
     }
 
     void OnEnable()
     {
-        // 타겟 설정
-        if (GameManager.instance != null && GameManager.instance.player != null)
-            target = GameManager.instance.player.transform;
-        else
-        {
-            GameObject p = GameObject.FindWithTag("Player");
-            target = p != null ? p.transform : null;
-        }
-
-        // 기본 상태 초기화
+        target = GameManager.instance.player.GetComponent<Rigidbody2D>();
         isLive = true;
         health = maxHealth;
         coll.enabled = true;
         rigid.simulated = true;
         spriter.sortingOrder = 2;
-
-        if (anim != null)
-            anim.SetBool("Dead", false);
-
-        // 로그 확인용
-        if (target == null)
-            Debug.LogWarning($"{name}: Target is NULL!");
-        else
-            Debug.Log($"{name}: Target found -> {target.name}");
-    }
-
-    void FixedUpdate()
-    {
-        if (GameManager.instance == null || !GameManager.instance.isLive)
-            return;
-        if (!isLive)
-            return;
-        if (target == null)
-            return;
-        if (anim != null && anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
-            return;
-
-        // 이동 방향 계산
-        Vector2 dirVec = (target.position - transform.position).normalized;
-
-        // 이동 적용 (Dynamic Rigidbody2D 필요)
-        Vector2 nextPos = rigid.position + dirVec * speed * Time.fixedDeltaTime;
-        rigid.MovePosition(nextPos);
-    }
-
-    void LateUpdate()
-    {
-        if (target == null)
-            return;
-        spriter.flipX = target.position.x < transform.position.x;
+        anim.SetBool("Dead", false);
     }
 
     public void Init(SpawnData data)
     {
-        if (animCon != null && data.spriteType >= 0 && data.spriteType < animCon.Length)
-            anim.runtimeAnimatorController = animCon[data.spriteType];
-        else
-            Debug.LogWarning("animCon index out of range or animCon null");
-
+        anim.runtimeAnimatorController = animCon[data.spriteType];
         speed = data.speed;
         maxHealth = data.health;
         health = data.health;
@@ -98,57 +74,45 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (!isLive)
+        //필터
+        if (!collision.CompareTag("Bullet") || !isLive)
             return;
 
-        if (!collision.CompareTag("Bullet"))
-            return;
-
-        if (!collision.TryGetComponent<Bullet>(out Bullet bullet))
-            return;
-
-        health -= bullet.damage;
+        health -= collision.GetComponent<Bullet>().damage;
         StartCoroutine(KnockBack());
+        //AudioManager.instance.PlaySfx(AudioManager.Sfx.Melee);
 
         if (health > 0)
         {
-            anim?.SetTrigger("Hit");
-            AudioManager.instance?.PlaySfx(AudioManager.Sfx.Hit);
+            //..Live
+            anim.SetTrigger("Hit");
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
         }
         else
         {
-            Die();
+            //..Die
+            isLive = false;
+            coll.enabled = false;
+            rigid.simulated = false;
+            spriter.sortingOrder = 1;
+            anim.SetBool("Dead", true);
+            GameManager.instance.kill++;
+            GameManager.instance.GetExp();
+            if(GameManager.instance.isLive)
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+
         }
-    }
-
-    void Die()
-    {
-        isLive = false;
-        coll.enabled = false;
-        rigid.simulated = false;
-        spriter.sortingOrder = 1;
-        anim?.SetBool("Dead", true);
-
-        GameManager.instance.kill++;
-        GameManager.instance.GetExp();
-
-        if (GameManager.instance.isLive)
-            AudioManager.instance?.PlaySfx(AudioManager.Sfx.Dead);
     }
 
     IEnumerator KnockBack()
     {
-        yield return wait;
-
-        if (GameManager.instance == null || GameManager.instance.player == null)
-            yield break;
-
-        Vector3 dirVec = (transform.position - GameManager.instance.player.transform.position).normalized;
-        if (rigid != null && rigid.simulated)
-            rigid.AddForce(dirVec * 3f, ForceMode2D.Impulse);
+        //yield return new WaitForSeconds(2f); //2초 쉬기
+        yield return wait; //1프레임 쉬기 //하나의 물리 프레임을 딜레이
+        Vector3 playerPos = GameManager.instance.player.transform.position;
+        Vector3 dirVec = transform.position - playerPos;
+        rigid.AddForce(dirVec.normalized * 3, ForceMode2D.Impulse);
     }
 
-    // 애니메이션 이벤트에서 호출되도록 (죽음 애니메이션 끝)
     void Dead()
     {
         gameObject.SetActive(false);

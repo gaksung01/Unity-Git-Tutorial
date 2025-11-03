@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static Cinemachine.DocumentationSortingAttribute;
 
 public class GameManager : MonoBehaviour
 {
@@ -57,7 +56,7 @@ public class GameManager : MonoBehaviour
     IEnumerator GameOverRoutine()
     {
         isLive = false;
-
+        
         yield return new WaitForSeconds(0.5f);
 
         uiResult.gameObject.SetActive(true);
@@ -102,8 +101,8 @@ public class GameManager : MonoBehaviour
         if (!isLive)
             return;
         gameTime += Time.deltaTime;
-
-        if (gameTime > maxTime)
+        
+        if(gameTime > maxTime)
         {
             gameTime = maxTime;
             GameVictory();
@@ -116,8 +115,8 @@ public class GameManager : MonoBehaviour
             return;
 
         exp++;
-
-        if (exp == nextExp[Mathf.Min(level, nextExp.Length - 1)])
+        
+        if(exp == nextExp[Mathf.Min(level, nextExp.Length-1)])
         {
             level++;
             exp = 0;
