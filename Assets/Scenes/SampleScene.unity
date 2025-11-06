@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: 09fe07323f84819499b460f61daa8656, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -5480,7 +5480,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 1304559308, guid: 0d5e657ee5a074e4baa53d5b248a01d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -6973,7 +6973,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0.0052, y: -0.0065, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13823,8 +13823,8 @@ Transform:
   m_GameObject: {fileID: 1039390958}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.0052, y: -0.0065, z: 0}
+  m_LocalScale: {x: 1.0104, y: 1.0117, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 217913062}
@@ -15527,16 +15527,16 @@ MonoBehaviour:
   bgmClip: {fileID: 8300000, guid: 4559935c00ef8e94b846e2e03e39f0d0, type: 3}
   bgmVolume: 0.2
   sfxClips:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 8300000, guid: 291608b8d286e2a4580ff36324455ce2, type: 3}
+  - {fileID: 8300000, guid: 0bddcb411d826e14bb26d40ae45d8e22, type: 3}
+  - {fileID: 8300000, guid: 6b7eaf4532a2f614595ad58d2b86efc4, type: 3}
+  - {fileID: 8300000, guid: 64795b87003c2324fa0814fbc336066c, type: 3}
+  - {fileID: 8300000, guid: c8a3fe17a6641ec48b38fb455a40a223, type: 3}
+  - {fileID: 8300000, guid: 14f24de2a9a70154e96297de25e2184c, type: 3}
+  - {fileID: 8300000, guid: d1bef3102d08ba944ac7bcac65733a26, type: 3}
+  - {fileID: 8300000, guid: 6f0c572d865b4664db7a460972bc4768, type: 3}
+  - {fileID: 8300000, guid: 4b294d59d2399014daa718b35c9de73b, type: 3}
+  - {fileID: 8300000, guid: 2c4bc183a5df5aa4baf7c4fcf236a2de, type: 3}
   sfxVolume: 0.5
   channels: 16
 --- !u!4 &1467582117
@@ -22705,7 +22705,7 @@ Transform:
   m_GameObject: {fileID: 1977034175}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0.0052, y: -0.0065, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
